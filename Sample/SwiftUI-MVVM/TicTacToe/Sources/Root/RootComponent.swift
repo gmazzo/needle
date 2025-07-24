@@ -23,10 +23,9 @@ class RootComponent: BootstrapComponent {
         return mutablePlayersStream
     }
 
-    public var mutablePlayersStream: MutablePlayersStream {
-        return shared { PlayersStreamImpl() }
-    }
-    
+    @SingletonInstance(PlayersStreamImpl())
+    public var mutablePlayersStream: MutablePlayersStream
+
     var rootViewModel: RootViewModel {
         RootViewModel(playerStream: playersStream)
     }

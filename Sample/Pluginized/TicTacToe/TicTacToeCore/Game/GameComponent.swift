@@ -30,13 +30,14 @@ protocol GamePluginExtension: PluginExtension {
 
 class GameComponent: UberPluginizedComponent<GameDependency, GamePluginExtension, GameNonCoreComponent>, GameBuilder {
 
-    var gameViewController: UIViewController {
-        return shared {
-            let viewController = GameViewController(mutableScoreStream: dependency.mutableScoreStream, playersStream: dependency.playersStream, scoreSheetBuilder: pluginExtension.scoreSheetBuilder)
-            self.bind(to: viewController)
-            return viewController
-        }
-    }
+    @Singleton({ (self: GameComponent) in
+        let viewController = GameViewController(mutableScoreStream: self.mutableScoreStream,
+                                                playersStream: self.playersStream,
+                                                scoreSheetBuilder: self.pluginExtension.scoreSheetBuilder)
+        self.bind(to: viewController)
+        return viewController
+    })
+    var gameViewController: UIViewController
 
     // This should not be used as the provider for GameDependency.
     var mutableScoreStream: MutableScoreStream {

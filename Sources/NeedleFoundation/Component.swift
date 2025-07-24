@@ -130,6 +130,7 @@ open class Component<DependencyType>: Scope {
     ///
     /// - parameter factory: The closure to construct the dependency object.
     /// - returns: The dependency object instance.
+    @available(*, deprecated, message: "This method may produce deadlocks if you a complex component hierarchy. Use `@Singleton` or `@SingletonInstance` property wrappers instead.")
     public final func shared<T>(__function: String = #function, _ factory: () -> T) -> T {
         // Use function name as the key, since this is unique per component
         // class. At the same time, this is also 150 times faster than
@@ -239,6 +240,7 @@ open class Component<DependencyType>: Scope {
     ///
     /// - parameter factory: The closure to construct the dependency object.
     /// - returns: The dependency object instance.
+    @available(*, deprecated, message: "This method may produce deadlocks if you a complex component hierarchy. Use `@Singleton` or `@SingletonInstance` property wrappers instead.")
     public final func shared<T>(__function: String = #function, _ factory: () -> T) -> T {
         // Use function name as the key, since this is unique per component
         // class. At the same time, this is also 150 times faster than

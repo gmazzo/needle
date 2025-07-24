@@ -23,11 +23,8 @@ class MyComponent: NeedleFoundation.Component<
         return Donut()
     }
 
-    public var sweetsBasket: Basket {
-        return shared {
-            Basket(dependency.candy, self.donut)
-        }
-    }
+    @Singleton({ (self: MyComponent) in Basket(dependency.candy, self.donut) })
+    public var sweetsBasket: Basket
 
     public var myChildComponent: MyChildComponent {
         return MyChildComponent(parent: self)
@@ -47,27 +44,18 @@ class SomeNonCoreComponent: NeedleFoundation.NonCoreComponent<    SomeNonCoreDep
     public var newNonCoreObject: NonCoreObject? {
         return NonCoreObject()
     }
-    public var sharedNonCoreObject: SharedObject {
-        return shared {
-            return SharedObject()
-        }
-    }
+    @SingletonInstance(SharedObject())
+    public var sharedNonCoreObject: SharedObject
 }
 
 class MyRComp: BootstrapComponent {
-    public var rootObj: Obj {
-        return shared {
-            Obj()
-        }
-    }
+    @SingletonInstance(Obj())
+    public var rootObj: Obj
 }
 
 class My2Component: Component<My2Dependency> {
-    public var book: Book {
-        return shared {
-            Book()
-        }
-    }
+    @SingletonInstance(Book())
+    public var book: Book
 
     public var maybeWallet: Wallet? {
         return Wallet()

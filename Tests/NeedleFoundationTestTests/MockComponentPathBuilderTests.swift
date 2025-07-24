@@ -188,19 +188,18 @@ class TestComponent: Component<EmptyDependency> {
     fileprivate var expectedOptionalShare: ClassProtocol? = {
         return ClassProtocolImpl()
     }()
+
+    @Singleton({ (self: TestComponent) in
+        self.callCount += 1
+        return NSObject()
+    })
+    var share: NSObject
     
-    var share: NSObject {
-        callCount += 1
-        return shared { NSObject() }
-    }
+    @SingletonInstance(NSObject())
+    var share2: NSObject
     
-    var share2: NSObject {
-        return shared { NSObject() }
-    }
-    
-    fileprivate var optionalShare: ClassProtocol? {
-        return shared { self.expectedOptionalShare }
-    }
+    @Singleton({ (self: TestComponent) in self.expectedOptionalShare })
+    fileprivate var optionalShare: ClassProtocol?
 }
 
 private protocol ClassProtocol: AnyObject {
