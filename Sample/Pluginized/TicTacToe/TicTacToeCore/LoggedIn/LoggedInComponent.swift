@@ -26,15 +26,14 @@ protocol LoggedInPluginExtension: PluginExtension {
 
 class LoggedInComponent: PluginizedComponent<EmptyDependency, LoggedInPluginExtension, LoggedInNonCoreComponent>, LoggedInBuilder {
 
-    var loggedInViewController: UIViewController {
-        return shared {
-            let viewController = LoggedInViewController(gameBuilder: gameComponent,
-                                                        scoreStream: pluginExtension.mutableScoreStream,
-                                                        scoreSheetBuilder: pluginExtension.scoreSheetBuilder)
-            self.bind(to: viewController)
-            return viewController
-        }
-    }
+    @Singleton({ (self: LoggedInComponent) in
+        let viewController = LoggedInViewController(gameBuilder: self.gameComponent,
+                                                    scoreStream: self.pluginExtension.mutableScoreStream,
+                                                    scoreSheetBuilder: self.pluginExtension.scoreSheetBuilder)
+        self.bind(to: viewController)
+        return viewController
+    })
+    var loggedInViewController: UIViewController
 
     var gameComponent: GameComponent {
         return GameComponent(parent: self)

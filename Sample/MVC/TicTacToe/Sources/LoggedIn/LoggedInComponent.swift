@@ -49,7 +49,6 @@ protocol LoggedInBuilder {
 // Use extension to show parsing of component extensions.
 extension LoggedInComponent {
 
-    var mutableScoreStream: MutableScoreStream {
-        return shared { ScoreStreamImpl() }
-    }
+    @SingletonInstance(ScoreStreamImpl())
+    var mutableScoreStream: MutableScoreStream
 }

@@ -24,9 +24,8 @@ public class LoggedInNonCoreComponent: NonCoreComponent<EmptyDependency> {
         return ScoreSheetComponent(parent: self)
     }
 
-    public var mutableScoreStream: MutableScoreStream {
-        return shared { ScoreStreamImpl() }
-    }
+    @SingletonInstance(ScoreStreamImpl())
+    public var mutableScoreStream: MutableScoreStream
 
     public var scoreStream: ScoreStream {
         return mutableScoreStream

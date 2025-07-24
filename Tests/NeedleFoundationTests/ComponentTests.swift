@@ -28,7 +28,7 @@ class ComponentTests: XCTestCase {
         }
     }
 
-    func test_shared_veirfySingleInstance() {
+    func test_shared_verifySingleInstance() {
         let component = TestComponent()
         XCTAssert(component.share === component.share, "Should have returned same shared object")
 
@@ -39,6 +39,19 @@ class ComponentTests: XCTestCase {
     func test_shared_optional() {
         let component = TestComponent()
         XCTAssert(component.optionalShare === component.expectedOptionalShare)
+    }
+
+    func test_singleton_verifySingleInstance() {
+        let component = TestComponent()
+        XCTAssert(component.singleton === component.singleton, "Should have returned same shared object")
+
+        XCTAssertTrue(component.singleton2 === component.singleton2)
+        XCTAssertFalse(component.singleton === component.singleton2)
+    }
+
+    func test_singleton_optional() {
+        let component = TestComponent()
+        XCTAssert(component.optionalSingleton === component.expectedOptionalShare)
     }
 }
 
@@ -61,6 +74,15 @@ class TestComponent: BootstrapComponent {
     fileprivate var optionalShare: ClassProtocol? {
         return shared { self.expectedOptionalShare }
     }
+
+    @Singleton({ (self: TestComponent) in NSObject() })
+    var singleton: NSObject
+
+    @SingletonInstance(NSObject())
+    var singleton2: NSObject
+
+    @Singleton({ (self: TestComponent) in self.expectedOptionalShare })
+    fileprivate var optionalSingleton: ClassProtocol?
 }
 
 private protocol ClassProtocol: AnyObject {

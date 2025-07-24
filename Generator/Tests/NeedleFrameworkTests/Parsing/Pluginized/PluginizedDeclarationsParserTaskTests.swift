@@ -40,7 +40,7 @@ class PluginizedDeclarationsParserTaskTests: AbstractParserTests {
         let myComponent = node.components.first { (component: ASTComponent) -> Bool in
             component.name == "MyComponent"
         }!
-        XCTAssertEqual(myComponent.expressionCallTypeNames, ["Basket", "Donut", "MyChildComponent", "Stream", "shared"])
+        XCTAssertEqual(myComponent.expressionCallTypeNames, ["Basket", "Donut", "MyChildComponent", "Stream"])
         XCTAssertEqual(myComponent.name, "MyComponent")
         XCTAssertEqual(myComponent.dependencyProtocolName, "MyDependency")
         XCTAssertEqual(myComponent.properties.count, 4)
@@ -64,7 +64,7 @@ class PluginizedDeclarationsParserTaskTests: AbstractParserTests {
         let my2Component = node.components.first { (component: ASTComponent) -> Bool in
             component.name == "My2Component"
         }!
-        XCTAssertEqual(my2Component.expressionCallTypeNames, ["Apple", "Banana", "Book", "MyStorage", "Wallet", "shared"])
+        XCTAssertEqual(my2Component.expressionCallTypeNames, ["Apple", "Banana", "Book", "MyStorage", "Wallet"])
         XCTAssertEqual(my2Component.name, "My2Component")
         XCTAssertEqual(my2Component.dependencyProtocolName, "My2Dependency")
         XCTAssertEqual(my2Component.properties.count, 3)
@@ -80,7 +80,7 @@ class PluginizedDeclarationsParserTaskTests: AbstractParserTests {
         let myRComp = node.components.first { (component: ASTComponent) -> Bool in
             component.name == "MyRComp"
             }!
-        XCTAssertEqual(myRComp.expressionCallTypeNames, ["Obj", "shared"])
+        XCTAssertEqual(myRComp.expressionCallTypeNames, ["Obj"])
         XCTAssertEqual(myRComp.name, "MyRComp")
         XCTAssertEqual(myRComp.dependencyProtocolName, "EmptyDependency")
         XCTAssertTrue(myRComp.isRoot)
@@ -92,7 +92,7 @@ class PluginizedDeclarationsParserTaskTests: AbstractParserTests {
         let someNonCoreComponent = node.nonCoreComponents.first { (component: ASTComponent) -> Bool in
             component.name == "SomeNonCoreComponent"
         }!
-        XCTAssertEqual(someNonCoreComponent.expressionCallTypeNames, ["NonCoreObject", "SharedObject", "shared"])
+        XCTAssertEqual(someNonCoreComponent.expressionCallTypeNames, ["NonCoreObject", "SharedObject"])
         XCTAssertEqual(someNonCoreComponent.name, "SomeNonCoreComponent")
         XCTAssertEqual(someNonCoreComponent.dependencyProtocolName, "SomeNonCoreDependency")
         XCTAssertEqual(someNonCoreComponent.properties.count, 2)
